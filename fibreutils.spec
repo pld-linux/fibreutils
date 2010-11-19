@@ -8,7 +8,7 @@ Release:	2
 License:	Proprietary
 Group:		Applications/System
 Source0:	ftp://ftp.hp.com/pub/softlib/software11/COL28042/co-82357-1/hp-fc-enablement-%{subver}.tar.gz
-# NoSource0-md5:	d5105f626ce4e73f77b8be9f1b215300
+# NoSource0-md5:	3e05533f8b3f29b08130f59f79ae4657
 NoSource:	0
 URL:		http://h20000.www2.hp.com/bizsupport/TechSupport/SoftwareDescription.jsp?swItem=co-82357-1
 BuildRequires:	rpm-perlprov >= 4.1-13
