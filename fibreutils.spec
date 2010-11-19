@@ -36,8 +36,9 @@ ARCH=x86_64
 %ifarch ia64
 ARCH=ia64
 %endif
-S=%{name}-%{version}-%{release}.$ARCH.rpm
 
+# fibreutils
+S=%{name}-%{version}-%{release}.$ARCH.rpm
 install -d fibreutils
 cd fibreutils
 rpm2cpio ../$S | cpio -dimu
@@ -50,10 +51,30 @@ mv fibreutils/opt/hp/hp_fibreutils .
 	s#/opt/hp/hp_fibreutils/scsi_info#%{_sbindir}/scsi_info#g
 ' hp_fibreutils/ls*
 
+# libs (for hpacucli at least)
+install -d libs
+cd libs
+rpm2cpio ../hp-fc-enablement-*.noarch.rpm | cpio -dimu
+cd ..
+mv libs/opt/hp/hp-fc-enablement/*-libs libs
+
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sbindir}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_libdir}}
+# fibreutils
 install -p hp_fibreutils/* $RPM_BUILD_ROOT%{_sbindir}
+
+# qlogic libs
+%ifarch %{ix86}
+ARCH=ia32
+%endif
+%ifarch %{x8664}
+ARCH=x86_64
+%endif
+%ifarch ia64
+ARCH=ia64
+%endif
+install -p libs/qlogic-libs/libqlsdm-$ARCH.so $RPM_BUILD_ROOT%{_libdir}/libqlsdm.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -65,3 +86,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/lssd
 %attr(755,root,root) %{_sbindir}/lssg
 %attr(755,root,root) %{_sbindir}/scsi_info
+%attr(755,root,root) %{_libdir}/libqlsdm.so
