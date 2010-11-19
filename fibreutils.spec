@@ -64,17 +64,22 @@ install -d $RPM_BUILD_ROOT{%{_sbindir},%{_libdir}}
 # fibreutils
 install -p hp_fibreutils/* $RPM_BUILD_ROOT%{_sbindir}
 
-# qlogic libs
+# libs
 %ifarch %{ix86}
-ARCH=ia32
+QARCH=ia32
+EARCH=i386
 %endif
 %ifarch %{x8664}
-ARCH=x86_64
+QARCH=x86_64
+EARCH=amd64
 %endif
 %ifarch ia64
-ARCH=ia64
+QARCH=ia64
+EARCH=ia64
 %endif
-install -p libs/qlogic-libs/libqlsdm-$ARCH.so $RPM_BUILD_ROOT%{_libdir}/libqlsdm.so
+
+install -p libs/qlogic-libs/libqlsdm-$QARCH.so $RPM_BUILD_ROOT%{_libdir}/libqlsdm.so
+install -p libs/emulex-libs/libemsdm/$EARCH/libemsdm.so $RPM_BUILD_ROOT%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -87,3 +92,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/lssg
 %attr(755,root,root) %{_sbindir}/scsi_info
 %attr(755,root,root) %{_libdir}/libqlsdm.so
+%attr(755,root,root) %{_libdir}/libemsdm.so
