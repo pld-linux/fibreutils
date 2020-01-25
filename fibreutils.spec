@@ -1,6 +1,5 @@
 %define		_enable_debug_packages	0
 %define		subver	2010-03-31
-%include	/usr/lib/rpm/macros.perl
 Summary:	HP Array Configuration Utility CLI
 Name:		fibreutils
 Version:	3.1
